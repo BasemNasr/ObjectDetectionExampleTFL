@@ -1,0 +1,14 @@
+[
+    {
+        "merged": "D:\\AndroidStudioProjects\\MLExamples\\ObjectDetectionExample\\app\\build\\intermediates\\incremental\\mergeDebugResources\\stripped.dir\\layout\\fragment_camera.xml",
+        "source": "D:\\AndroidStudioProjects\\MLExamples\\ObjectDetectionExample\\app\\src\\main\\res\\layout\\fragment_camera.xml"
+    },
+    {
+        "merged": "D:\\AndroidStudioProjects\\MLExamples\\ObjectDetectionExample\\app\\build\\intermediates\\incremental\\mergeDebugResources\\stripped.dir\\layout\\activity_main.xml",
+        "source": "D:\\AndroidStudioProjects\\MLExamples\\ObjectDetectionExample\\app\\src\\main\\res\\layout\\activity_main.xml"
+    },
+    {
+        "merged": "D:\\AndroidStudioProjects\\MLExamples\\ObjectDetectionExample\\app\\build\\intermediates\\incremental\\mergeDebugResources\\stripped.dir\\layout\\info_bottom_sheet.xml",
+        "source": "D:\\AndroidStudioProjects\\MLExamples\\ObjectDetectionExample\\app\\src\\main\\res\\layout\\info_bottom_sheet.xml"
+    }
+]
