@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
     ~ Copyright 2022 The TensorFlow Authors. All Rights Reserved.
     ~
     ~ Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,7 +14,7 @@
     ~ limitations under the License.
 -->
 <resources>
-    <string name="app_name">TFLite Object Detection</string>
+    <string name="app_name">Clothes Category Detection (TFlite)</string>
 
     <string name="alt_bottom_sheet_chevron">Bottom sheet expandable indicator</string>
 
@@ -45,10 +44,12 @@
     </string-array>
 
     <string-array name="models_spinner_titles">
+        <item>Clothes</item>
         <item>MobileNet V1</item>
         <item>EfficientDet Lite0</item>
         <item>EfficientDet Lite1</item>
         <item>EfficientDet Lite2</item>
-        <item>Clothes</item>
     </string-array>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

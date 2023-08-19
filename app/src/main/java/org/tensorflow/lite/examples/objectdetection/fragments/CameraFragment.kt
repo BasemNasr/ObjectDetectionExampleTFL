@@ -35,7 +35,9 @@ import androidx.camera.core.Preview
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.navigation.NavOptions
 import androidx.navigation.Navigation
+import androidx.navigation.fragment.findNavController
 import java.util.LinkedList
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
@@ -315,6 +317,16 @@ class CameraFragment : Fragment(), ObjectDetectorHelper.DetectorListener {
 
             // Force a redraw
             fragmentCameraBinding.overlay.invalidate()
+            //Log.v("Resulttt","$results")
+            //if(results?.isNotEmpty() == true){
+                //Log.v("Result[0]:Category", results?.get(0)?.categories!![0].label)
+            //}
+            fragmentCameraBinding.overlay.setOnClickListener {
+                //Toast.makeText(requireContext(),"${results?.get(0)?.categories!![0].label}",Toast.LENGTH_LONG).show()
+
+                Navigation.findNavController(requireActivity(), R.id.fragment_container)
+                    .navigate(CameraFragmentDirections.actionCameraFragmentToResultFragment())
+            }
         }
     }
 

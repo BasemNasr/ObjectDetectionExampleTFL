@@ -157,7 +157,7 @@
                     android:gravity="center"
                     android:layout_marginLeft="@dimen/bottom_sheet_control_text_side_margin"
                     android:layout_marginRight="@dimen/bottom_sheet_control_text_side_margin"
-                    android:text="3"
+                    android:text="1"
                     android:textColor="@color/bottom_sheet_text_color"
                     android:textSize="@dimen/bottom_sheet_text_size" />
                 <androidx.appcompat.widget.AppCompatImageButton

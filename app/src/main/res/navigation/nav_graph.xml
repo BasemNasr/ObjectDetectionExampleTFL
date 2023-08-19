@@ -30,6 +30,22 @@
             app:destination="@id/permissions_fragment"
             app:popUpTo="@id/camera_fragment"
             app:popUpToInclusive="true"/>
+        <action
+            android:id="@+id/action_camera_fragment_to_result_fragment"
+            app:destination="@id/result_fragment" />
+
+
+    </fragment>
+    <fragment
+        android:id="@+id/result_fragment"
+        android:name="org.tensorflow.lite.examples.objectdetection.fragments.ProductResultFragment"
+        android:label="CameraFragment" >
+
+        <argument
+            android:name="query"
+            app:argType="string"
+            android:defaultValue="default"/>
+
 
     </fragment>
 </navigation>
