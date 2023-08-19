@@ -34,7 +34,9 @@ constructor(
         holder.binding.apply {
             tvCategoryName.text = data.title
             Glide.with(holder.itemView).load(data.imageUrl).into(ivCategoryImage)
-            parentLayout.setOnClickListener { onItemClicked.onItemClicked(data,"click", position) }
+            parentLayout.setOnClickListener {
+                onItemClicked.onItemClicked(data,"click", position)
+            }
         }
     }
 

@@ -80,14 +80,13 @@ class ProductResultFragment : Fragment(), OnItemClickedGeneric<Any> {
     }
 
     override fun onItemClicked(data: Any, type: String, position: Int?) {
-        when(data){
-            (data is SearchResponse.Image) ->{
-                val url = (data as SearchResponse.Image).link
-                val i = Intent(Intent.ACTION_VIEW)
-                i.data = Uri.parse(url)
-                startActivity(i)
-            }
+        if(data is SearchResponse.Image){
+            val url = data.link
+            val i = Intent(Intent.ACTION_VIEW)
+            i.data = Uri.parse(url)
+            startActivity(i)
         }
+
 
 
     }
