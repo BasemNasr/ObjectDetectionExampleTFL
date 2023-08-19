@@ -1,7 +1,7 @@
-package org.tensorflow.lite.examples.objectdetection.network.response
+package org.tensorflow.lite.examples.objectdetection.utils.network.response
 
 data class SearchResponse(
-    val images: List<Image?>? = null,
+    val images: List<Image>? = null,
     val searchParameters: SearchParameters? = null
 ) {
     data class Image(

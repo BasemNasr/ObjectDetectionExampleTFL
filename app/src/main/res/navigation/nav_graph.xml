@@ -32,7 +32,13 @@
             app:popUpToInclusive="true"/>
         <action
             android:id="@+id/action_camera_fragment_to_result_fragment"
-            app:destination="@id/result_fragment" />
+            app:destination="@id/result_fragment" >
+            <argument
+                android:name="query"
+                app:argType="string"
+                android:defaultValue="default"/>
+
+        </action>
 
 
     </fragment>
@@ -45,7 +51,6 @@
             android:name="query"
             app:argType="string"
             android:defaultValue="default"/>
-
 
     </fragment>
 </navigation>

@@ -1,4 +1,4 @@
-package org.tensorflow.lite.examples.objectdetection.network;
+package org.tensorflow.lite.examples.objectdetection.utils.network;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;

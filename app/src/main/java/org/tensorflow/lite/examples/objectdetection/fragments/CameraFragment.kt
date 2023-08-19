@@ -25,30 +25,24 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.Toast
-import androidx.camera.core.AspectRatio
-import androidx.camera.core.Camera
-import androidx.camera.core.CameraSelector
-import androidx.camera.core.ImageAnalysis
+import androidx.camera.core.*
 import androidx.camera.core.ImageAnalysis.OUTPUT_IMAGE_FORMAT_RGBA_8888
-import androidx.camera.core.ImageProxy
-import androidx.camera.core.Preview
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import androidx.navigation.NavOptions
 import androidx.navigation.Navigation
-import androidx.navigation.fragment.findNavController
-import java.util.LinkedList
-import java.util.concurrent.ExecutorService
-import java.util.concurrent.Executors
 import org.tensorflow.lite.examples.objectdetection.ObjectDetectorHelper
 import org.tensorflow.lite.examples.objectdetection.R
 import org.tensorflow.lite.examples.objectdetection.databinding.FragmentCameraBinding
 import org.tensorflow.lite.task.vision.detector.Detection
+import java.util.*
+import java.util.concurrent.ExecutorService
+import java.util.concurrent.Executors
 
 class CameraFragment : Fragment(), ObjectDetectorHelper.DetectorListener {
 
     private val TAG = "ObjectDetection"
+    private var currentLabel = ""
 
     private var _fragmentCameraBinding: FragmentCameraBinding? = null
 
@@ -76,7 +70,7 @@ class CameraFragment : Fragment(), ObjectDetectorHelper.DetectorListener {
     }
 
     override fun onDestroyView() {
-        _fragmentCameraBinding = null
+//        _fragmentCameraBinding = null
         super.onDestroyView()
 
         // Shut down our background executor
@@ -84,9 +78,9 @@ class CameraFragment : Fragment(), ObjectDetectorHelper.DetectorListener {
     }
 
     override fun onCreateView(
-      inflater: LayoutInflater,
-      container: ViewGroup?,
-      savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View {
         _fragmentCameraBinding = FragmentCameraBinding.inflate(inflater, container, false)
 
@@ -99,7 +93,8 @@ class CameraFragment : Fragment(), ObjectDetectorHelper.DetectorListener {
 
         objectDetectorHelper = ObjectDetectorHelper(
             context = requireContext(),
-            objectDetectorListener = this)
+            objectDetectorListener = this
+        )
 
         // Initialize our background executor
         cameraExecutor = Executors.newSingleThreadExecutor()
@@ -112,6 +107,11 @@ class CameraFragment : Fragment(), ObjectDetectorHelper.DetectorListener {
 
         // Attach listeners to UI control widgets
         initBottomSheetControls()
+
+        fragmentCameraBinding.overlay.setOnClickListener {
+            Navigation.findNavController(requireActivity(), R.id.fragment_container)
+                .navigate(CameraFragmentDirections.actionCameraFragmentToResultFragment().setQuery(currentLabel))
+        }
     }
 
     private fun initBottomSheetControls() {
@@ -257,9 +257,9 @@ class CameraFragment : Fragment(), ObjectDetectorHelper.DetectorListener {
                             // The image rotation and RGB image buffer are initialized only once
                             // the analyzer has started running
                             bitmapBuffer = Bitmap.createBitmap(
-                              image.width,
-                              image.height,
-                              Bitmap.Config.ARGB_8888
+                                image.width,
+                                image.height,
+                                Bitmap.Config.ARGB_8888
                             )
                         }
 
@@ -299,33 +299,29 @@ class CameraFragment : Fragment(), ObjectDetectorHelper.DetectorListener {
     // Update UI after objects have been detected. Extracts original image height/width
     // to scale and place bounding boxes properly through OverlayView
     override fun onResults(
-      results: MutableList<Detection>?,
-      inferenceTime: Long,
-      imageHeight: Int,
-      imageWidth: Int
+        results: MutableList<Detection>?,
+        inferenceTime: Long,
+        imageHeight: Int,
+        imageWidth: Int
     ) {
         activity?.runOnUiThread {
-            fragmentCameraBinding.bottomSheetLayout.inferenceTimeVal.text =
-                            String.format("%d ms", inferenceTime)
+            fragmentCameraBinding?.let {
+                fragmentCameraBinding.bottomSheetLayout.inferenceTimeVal.text =
+                    String.format("%d ms", inferenceTime)
+                // Pass necessary information to OverlayView for drawing on the canvas
+                fragmentCameraBinding.overlay.setResults(
+                    results ?: LinkedList<Detection>(),
+                    imageHeight,
+                    imageWidth
+                )
+                fragmentCameraBinding.overlay.invalidate()
 
-            // Pass necessary information to OverlayView for drawing on the canvas
-            fragmentCameraBinding.overlay.setResults(
-                results ?: LinkedList<Detection>(),
-                imageHeight,
-                imageWidth
-            )
+            }
+
 
             // Force a redraw
-            fragmentCameraBinding.overlay.invalidate()
-            //Log.v("Resulttt","$results")
-            //if(results?.isNotEmpty() == true){
-                //Log.v("Result[0]:Category", results?.get(0)?.categories!![0].label)
-            //}
-            fragmentCameraBinding.overlay.setOnClickListener {
-                //Toast.makeText(requireContext(),"${results?.get(0)?.categories!![0].label}",Toast.LENGTH_LONG).show()
-
-                Navigation.findNavController(requireActivity(), R.id.fragment_container)
-                    .navigate(CameraFragmentDirections.actionCameraFragmentToResultFragment())
+            if(results?.isNotEmpty()==true){
+                currentLabel = results?.get(0)?.categories!![0].label
             }
         }
     }
