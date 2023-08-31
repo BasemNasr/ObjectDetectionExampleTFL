@@ -49,6 +49,7 @@
         <item>EfficientDet Lite0</item>
         <item>EfficientDet Lite1</item>
         <item>EfficientDet Lite2</item>
+        <item>New Clothes Model</item>
     </string-array>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

@@ -18,12 +18,20 @@ package org.tensorflow.lite.examples.objectdetection.fragments
 import android.annotation.SuppressLint
 import android.content.res.Configuration
 import android.graphics.Bitmap
+import android.graphics.SurfaceTexture
+import android.media.MediaPlayer
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.Surface
+import android.view.SurfaceHolder
+import android.view.SurfaceView
+import android.view.TextureView
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
+import android.widget.MediaController
 import android.widget.Toast
 import androidx.camera.core.*
 import androidx.camera.core.ImageAnalysis.OUTPUT_IMAGE_FORMAT_RGBA_8888
@@ -38,6 +46,7 @@ import org.tensorflow.lite.task.vision.detector.Detection
 import java.util.*
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
+
 
 class CameraFragment : Fragment(), ObjectDetectorHelper.DetectorListener {
 
@@ -105,14 +114,21 @@ class CameraFragment : Fragment(), ObjectDetectorHelper.DetectorListener {
             setUpCamera()
         }
 
+
         // Attach listeners to UI control widgets
         initBottomSheetControls()
 
         fragmentCameraBinding.overlay.setOnClickListener {
-            Navigation.findNavController(requireActivity(), R.id.fragment_container)
-                .navigate(CameraFragmentDirections.actionCameraFragmentToResultFragment().setQuery(currentLabel))
+//            Navigation.findNavController(requireActivity(), R.id.fragment_container)
+//                .navigate(CameraFragmentDirections.actionCameraFragmentToResultFragment().setQuery(currentLabel))
+        }
+        fragmentCameraBinding.ivVideo.setOnClickListener {
+          Navigation.findNavController(requireActivity(), R.id.fragment_container)
+                .navigate(CameraFragmentDirections.actionCameraFragmentToVideoFragment())
         }
     }
+
+
 
     private fun initBottomSheetControls() {
         // When clicked, lower detection score threshold floor
@@ -293,7 +309,7 @@ class CameraFragment : Fragment(), ObjectDetectorHelper.DetectorListener {
 
     override fun onConfigurationChanged(newConfig: Configuration) {
         super.onConfigurationChanged(newConfig)
-        imageAnalyzer?.targetRotation = fragmentCameraBinding.viewFinder.display.rotation
+//        imageAnalyzer?.targetRotation = fragmentCameraBinding.viewFinder.display.rotation
     }
 
     // Update UI after objects have been detected. Extracts original image height/width
